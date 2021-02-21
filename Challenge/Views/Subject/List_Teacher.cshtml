@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Challenge.Models.Teacher>
+
+    <select class="form-control" id="DNI_Teacher" name="DNI_Teacher">
+        @foreach (var item in Model)
+        {
+            <option value="@item.DNI">@item.Name  @item.Surname</option>
+        }
+
+    </select>
+
+

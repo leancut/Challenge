@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="challengeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Inscriptions">
+          <Key>
+            <PropertyRef Name="Id_Inscription" />
+          </Key>
+          <Property Name="Id_User" Type="int" />
+          <Property Name="Id_Subject" Type="int" />
+          <Property Name="Inscription_Date" Type="date" />
+          <Property Name="Id_Inscription" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="Id_Module" />
+          </Key>
+          <Property Name="Id_Module" Type="int" Nullable="false" />
+          <Property Name="Name_Module" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="Id_Operation" />
+          </Key>
+          <Property Name="Id_Operation" Type="int" Nullable="false" />
+          <Property Name="Name_Operation" Type="varchar" MaxLength="50" />
+          <Property Name="Id_Module" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id_Rol" />
+          </Key>
+          <Property Name="Id_Rol" Type="int" Nullable="false" />
+          <Property Name="Name_Rol" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Rol_Operation">
+          <Key>
+            <PropertyRef Name="Id_Rol_Operation" />
+          </Key>
+          <Property Name="Id_Rol_Operation" Type="int" Nullable="false" />
+          <Property Name="Id_Rol" Type="int" />
+          <Property Name="Id_Operation" Type="int" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id_Subject" />
+          </Key>
+          <Property Name="Name_Subject" Type="nchar" MaxLength="100" />
+          <Property Name="DNI_Teacher" Type="int" />
+          <Property Name="Schedule_From" Type="time" Precision="4" />
+          <Property Name="Schedule_To" Type="time" Precision="4" />
+          <Property Name="Quota" Type="int" />
+          <Property Name="Id_Subject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" />
+          <Property Name="Surname" Type="nchar" MaxLength="100" />
+          <Property Name="Status" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="int" Nullable="false" />
+          <Property Name="Name_User" Type="varchar" MaxLength="50" />
+          <Property Name="Email_User" Type="varchar" MaxLength="200" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" />
+          <Property Name="Id_Rol" Type="int" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Inscriptions_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Inscriptions" Type="Self.Inscriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="Inscriptions">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inscriptions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Inscriptions" Type="Self.Inscriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Inscriptions">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operation_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="Id_Module" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="Id_Module" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Operation">
+          <End Role="Operation" Type="Self.Operation" Multiplicity="0..1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id_Operation" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="Id_Operation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="DNI_Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="challengeModelStoreContainer">
+          <EntitySet Name="Inscriptions" EntityType="Self.Inscriptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol_Operation" EntityType="Self.Rol_Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Inscriptions_Subjects" Association="Self.FK_Inscriptions_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Inscriptions" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscriptions_Users" Association="Self.FK_Inscriptions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Inscriptions" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operation_Module" Association="Self.FK_Operation_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Operation" Association="Self.FK_Rol_Operation_Operation">
+            <End Role="Operation" EntitySet="Operation" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Rol" Association="Self.FK_Rol_Operation_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_Teachers" Association="Self.FK_Subjects_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Rol" Association="Self.FK_Users_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="challengeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="challengeContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Inscriptions" EntityType="challengeModel.Inscription" />
+          <EntitySet Name="Modules" EntityType="challengeModel.Module" />
+          <EntitySet Name="Operations" EntityType="challengeModel.Operation" />
+          <EntitySet Name="Rols" EntityType="challengeModel.Rol" />
+          <EntitySet Name="Rol_Operation" EntityType="challengeModel.Rol_Operation" />
+          <EntitySet Name="Subjects" EntityType="challengeModel.Subject" />
+          <EntitySet Name="Teachers" EntityType="challengeModel.Teacher" />
+          <EntitySet Name="Users" EntityType="challengeModel.User" />
+          <AssociationSet Name="FK_Inscriptions_Subjects" Association="challengeModel.FK_Inscriptions_Subjects">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscriptions_Users" Association="challengeModel.FK_Inscriptions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operation_Module" Association="challengeModel.FK_Operation_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="Operation" EntitySet="Operations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Operation" Association="challengeModel.FK_Rol_Operation_Operation">
+            <End Role="Operation" EntitySet="Operations" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Rol" Association="challengeModel.FK_Rol_Operation_Rol">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Rol" Association="challengeModel.FK_Users_Rol">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_Teachers" Association="challengeModel.FK_Subjects_Teachers">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Inscription">
+          <Key>
+            <PropertyRef Name="Id_Inscription" />
+          </Key>
+          <Property Name="Id_User" Type="Int32" />
+          <Property Name="Id_Subject" Type="Int32" />
+          <Property Name="Inscription_Date" Type="DateTime" Precision="0" />
+          <Property Name="Id_Inscription" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Subject" Relationship="challengeModel.FK_Inscriptions_Subjects" FromRole="Inscription" ToRole="Subject" />
+          <NavigationProperty Name="User" Relationship="challengeModel.FK_Inscriptions_Users" FromRole="Inscription" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="Id_Module" />
+          </Key>
+          <Property Name="Id_Module" Type="Int32" Nullable="false" />
+          <Property Name="Name_Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operations" Relationship="challengeModel.FK_Operation_Module" FromRole="Module" ToRole="Operation" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="Id_Operation" />
+          </Key>
+          <Property Name="Id_Operation" Type="Int32" Nullable="false" />
+          <Property Name="Name_Operation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Module" Type="Int32" />
+          <NavigationProperty Name="Module" Relationship="challengeModel.FK_Operation_Module" FromRole="Operation" ToRole="Module" />
+          <NavigationProperty Name="Rol_Operation" Relationship="challengeModel.FK_Rol_Operation_Operation" FromRole="Operation" ToRole="Rol_Operation" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id_Rol" />
+          </Key>
+          <Property Name="Id_Rol" Type="Int32" Nullable="false" />
+          <Property Name="Name_Rol" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Rol_Operation" Relationship="challengeModel.FK_Rol_Operation_Rol" FromRole="Rol" ToRole="Rol_Operation" />
+          <NavigationProperty Name="Users" Relationship="challengeModel.FK_Users_Rol" FromRole="Rol" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rol_Operation">
+          <Key>
+            <PropertyRef Name="Id_Rol_Operation" />
+          </Key>
+          <Property Name="Id_Rol_Operation" Type="Int32" Nullable="false" />
+          <Property Name="Id_Rol" Type="Int32" />
+          <Property Name="Id_Operation" Type="Int32" />
+          <NavigationProperty Name="Operation" Relationship="challengeModel.FK_Rol_Operation_Operation" FromRole="Rol_Operation" ToRole="Operation" />
+          <NavigationProperty Name="Rol" Relationship="challengeModel.FK_Rol_Operation_Rol" FromRole="Rol_Operation" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id_Subject" />
+          </Key>
+          <Property Name="Name_Subject" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="DNI_Teacher" Type="Int32" />
+          <Property Name="Schedule_From" Type="Time" Precision="4" />
+          <Property Name="Schedule_To" Type="Time" Precision="4" />
+          <Property Name="Quota" Type="Int32" />
+          <Property Name="Id_Subject" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Inscriptions" Relationship="challengeModel.FK_Inscriptions_Subjects" FromRole="Subject" ToRole="Inscription" />
+          <NavigationProperty Name="Teacher" Relationship="challengeModel.FK_Subjects_Teachers" FromRole="Subject" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Subjects" Relationship="challengeModel.FK_Subjects_Teachers" FromRole="Teacher" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="Name_User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email_User" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Rol" Type="Int32" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inscriptions" Relationship="challengeModel.FK_Inscriptions_Users" FromRole="User" ToRole="Inscription" />
+          <NavigationProperty Name="Rol" Relationship="challengeModel.FK_Users_Rol" FromRole="User" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_Inscriptions_Subjects">
+          <End Type="challengeModel.Subject" Role="Subject" Multiplicity="0..1" />
+          <End Type="challengeModel.Inscription" Role="Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inscriptions_Users">
+          <End Type="challengeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="challengeModel.Inscription" Role="Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operation_Module">
+          <End Type="challengeModel.Module" Role="Module" Multiplicity="0..1" />
+          <End Type="challengeModel.Operation" Role="Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="Id_Module" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="Id_Module" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Operation">
+          <End Type="challengeModel.Operation" Role="Operation" Multiplicity="0..1" />
+          <End Type="challengeModel.Rol_Operation" Role="Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id_Operation" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="Id_Operation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Rol">
+          <End Type="challengeModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="challengeModel.Rol_Operation" Role="Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Rol">
+          <End Type="challengeModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="challengeModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_Teachers">
+          <End Type="challengeModel.Teacher" Role="Teacher" Multiplicity="0..1" />
+          <End Type="challengeModel.Subject" Role="Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="DNI_Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="challengeModelStoreContainer" CdmEntityContainer="challengeContext">
+          <EntitySetMapping Name="Inscriptions">
+            <EntityTypeMapping TypeName="challengeModel.Inscription">
+              <MappingFragment StoreEntitySet="Inscriptions">
+                <ScalarProperty Name="Id_Inscription" ColumnName="Id_Inscription" />
+                <ScalarProperty Name="Inscription_Date" ColumnName="Inscription_Date" />
+                <ScalarProperty Name="Id_Subject" ColumnName="Id_Subject" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="challengeModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="Name_Module" ColumnName="Name_Module" />
+                <ScalarProperty Name="Id_Module" ColumnName="Id_Module" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operations">
+            <EntityTypeMapping TypeName="challengeModel.Operation">
+              <MappingFragment StoreEntitySet="Operation">
+                <ScalarProperty Name="Id_Module" ColumnName="Id_Module" />
+                <ScalarProperty Name="Name_Operation" ColumnName="Name_Operation" />
+                <ScalarProperty Name="Id_Operation" ColumnName="Id_Operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rols">
+            <EntityTypeMapping TypeName="challengeModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Name_Rol" ColumnName="Name_Rol" />
+                <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol_Operation">
+            <EntityTypeMapping TypeName="challengeModel.Rol_Operation">
+              <MappingFragment StoreEntitySet="Rol_Operation">
+                <ScalarProperty Name="Id_Operation" ColumnName="Id_Operation" />
+                <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+                <ScalarProperty Name="Id_Rol_Operation" ColumnName="Id_Rol_Operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="challengeModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Id_Subject" ColumnName="Id_Subject" />
+                <ScalarProperty Name="Quota" ColumnName="Quota" />
+                <ScalarProperty Name="Schedule_To" ColumnName="Schedule_To" />
+                <ScalarProperty Name="Schedule_From" ColumnName="Schedule_From" />
+                <ScalarProperty Name="DNI_Teacher" ColumnName="DNI_Teacher" />
+                <ScalarProperty Name="Name_Subject" ColumnName="Name_Subject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="challengeModel.Teacher">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="challengeModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Email_User" ColumnName="Email_User" />
+                <ScalarProperty Name="Name_User" ColumnName="Name_User" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

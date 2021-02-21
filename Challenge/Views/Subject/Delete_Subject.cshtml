@@ -1,0 +1,72 @@
+﻿@model Challenge.Models.Subject
+
+@{
+    ViewBag.Title = "Delete_Subject";
+}
+
+<h2>Delete Subject</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Subject</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNI_Teacher)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNI_Teacher)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedule_From)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schedule_From)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedule_To)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schedule_To)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quota)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quota)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_Subject)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Subjects List", "Index_Subject")
+        </div>
+    }
+</div>

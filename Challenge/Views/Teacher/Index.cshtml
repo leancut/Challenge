@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Challenge.Models.Teacher>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <h2>Teacher Managment</h2>
+
+<p>
+    @Html.ActionLink("Create New Teacher", "Create_Teacher")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Full_Name)
+        </th>
+                <th>
+            @Html.DisplayNameFor(model => model.DNI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Full_Name)
+        </td>
+              <td>
+            @Html.DisplayFor(modelItem => item.DNI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit Teacher", "Edit_Teacher", new { id=item.DNI}) |
+            @Html.ActionLink("Details", "Details_Teacher", new {id=item.DNI }) |
+            @Html.ActionLink("Delete", "Delete_Teacher", new { id=item.DNI })
+        </td>
+    </tr>
+}
+
+</table>

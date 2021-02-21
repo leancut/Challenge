@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Challenge.Models.Subject>
+
+@{
+    ViewBag.Title = "Index_Subject";
+}
+
+<h2>Index_Subject</h2>
+
+<p>
+    @Html.ActionLink("Create New Subject", "Create_Subject")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name_Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DNI_Teacher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule_From)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule_To)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quota)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_Subject)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name_Subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DNI_Teacher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule_From)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule_To)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quota)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_Subject)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit_Subject", new { id=item.Id_Subject}) |
+            @Html.ActionLink("Details", "Details_Subject", new { id=item.Id_Subject}) |
+            @Html.ActionLink("Delete", "Delete_Subject", new {id=item.Id_Subject })
+        </td>
+    </tr>
+}
+
+</table>
