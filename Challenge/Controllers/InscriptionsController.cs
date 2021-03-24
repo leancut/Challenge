@@ -21,23 +21,54 @@ namespace Challenge.Controllers
 
         }
 
-        public ActionResult Details_Subject(int id)
+        public ActionResult Details_InsSubject(int id)
         {
             using (var db = new challengeContext())
             {
-                return View();
+                Subject subj = db.Subjects.Where(a => a.Id_Subject == id).FirstOrDefault();
+                var teach = subj.DNI_Teacher;
+                var tea = db.Teachers.Where(b => b.DNI == teach).Select(t => t.Surname).FirstOrDefault();
+                var tea0 = db.Teachers.Where(b => b.DNI == teach).Select(t => t.Name).FirstOrDefault();
+                ViewBag.Teache = tea0 + " "+tea;
+                return View(subj);
             }
         }
-        public ActionResult Create_Inscription(Subject s)
+        public ActionResult Create_Inscription(int id)
         {
-            return View();
+            var oser = (User)Session["User"];
+            var Inscription = new Inscription();
+            Inscription.Id_User = oser.Id_User;
+            Inscription.Id_Subject = id;
+            Inscription.Inscription_Date = DateTime.Now;
+
+            return View(Inscription);
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create_Inscription(Inscription I)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return View();
+            try
+            {
+                using (challengeContext db = new challengeContext())
+                {
+                    db.Inscriptions.Add(I);
+                    var id = I.Id_Subject;
+                    Subject sub = db.Subjects.Where(a => a.Id_Subject == id).FirstOrDefault();
+                    sub.Quota = sub.Quota-1;
+                    db.SaveChanges();
+                    return RedirectToAction("Index_Inscriptions");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error when the Teacher is input", ex);
+                return View();
+            }
+
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Challenge.Controllers
     {
         public ActionResult Index()
         {
+            var UserName = User.Identity.Name;
             return View();
         }
 

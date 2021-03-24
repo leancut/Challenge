@@ -249,6 +249,7 @@
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
     <Content Include="Views\Inscriptions\Index_Inscriptions.cshtml" />
     <Content Include="Views\Inscriptions\Create_Inscription.cshtml" />
+    <Content Include="Views\Inscriptions\Details_InsSubject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

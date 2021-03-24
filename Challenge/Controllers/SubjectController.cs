@@ -18,7 +18,7 @@ namespace Challenge.Controllers
             challengeContext db = new challengeContext();
 
             return View(db.Subjects.ToList());
-            
+
         }
 
         public ActionResult Create_Subject()
@@ -105,6 +105,7 @@ namespace Challenge.Controllers
             {
                 using (var db = new challengeContext())
                 {
+                    
                     Subject subj = db.Subjects.Find(s.Id_Subject);
                     subj.Name_Subject = s.Name_Subject;
                     subj.DNI_Teacher = s.DNI_Teacher;
@@ -131,6 +132,10 @@ namespace Challenge.Controllers
             using (var db = new challengeContext())
             {
                 Subject sub = db.Subjects.Where(a => a.Id_Subject == id).FirstOrDefault();
+                var teach = sub.DNI_Teacher;
+                var tea = db.Teachers.Where(b => b.DNI == teach).Select(t => t.Surname).FirstOrDefault();
+                var tea0 = db.Teachers.Where(b => b.DNI == teach).Select(t => t.Name).FirstOrDefault();
+                ViewBag.Teache = tea0 + " " + tea;
                 return View(sub);
             }
         }

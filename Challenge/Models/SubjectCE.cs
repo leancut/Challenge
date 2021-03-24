@@ -28,7 +28,7 @@ namespace Challenge.Models
         [Display(Name = "Subject´s Quota")]
         public string Quota { get; set; }
 
-        
+
     }
     [MetadataType(typeof(SubjectCE))]
     public partial class Subject

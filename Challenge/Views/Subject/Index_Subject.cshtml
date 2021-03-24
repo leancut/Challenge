@@ -32,32 +32,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name_Subject)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DNI_Teacher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Schedule_From)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Schedule_To)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quota)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id_Subject)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit_Subject", new { id=item.Id_Subject}) |
-            @Html.ActionLink("Details", "Details_Subject", new { id=item.Id_Subject}) |
-            @Html.ActionLink("Delete", "Delete_Subject", new {id=item.Id_Subject })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name_Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNI_Teacher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule_From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule_To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id_Subject)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit_Subject", new { id = item.Id_Subject }) |
+                @Html.ActionLink("Details", "Details_Subject", new { id = item.Id_Subject }) |
+                @Html.ActionLink("Delete", "Delete_Subject", new { id = item.Id_Subject })
+            </td>
+        </tr>
+    }
 
 </table>

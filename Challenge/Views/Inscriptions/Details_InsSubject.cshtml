@@ -1,13 +1,13 @@
 ﻿@model Challenge.Models.Subject
 
 @{
-    ViewBag.Title = "Details_Subject";
+    ViewBag.Title = "Details Subject";
 }
 
 <h2>Details Subject</h2>
 
 <div>
-    <h4>Subject  @Html.DisplayNameFor(model => model.Name_Subject)</h4>
+    <h4>Subject</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,10 +21,10 @@
         <dt>
             @Html.DisplayNameFor(model => model.DNI_Teacher)
         </dt>
+
         <dd>
-            @ViewBag.Teache
+@ViewBag.Teache
         </dd>
-       
 
         <dt>
             @Html.DisplayNameFor(model => model.Schedule_From)
@@ -61,6 +61,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit Subject", "Edit_Subject", new {id = Model.Id_Subject }) |
-    @Html.ActionLink("Back to Subjects List", "Index_Subject")
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
